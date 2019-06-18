@@ -4,8 +4,8 @@ from itertools import ifilter
 
 
 # when playing against the cpu, the player is always the player 1
-PLAYER_1 = u'x'
-PLAYER_2 = u'o'
+PLAYER = u'x'
+CPU_PLAYER = u'o'
 
 
 def factorial(n):
@@ -19,41 +19,41 @@ def factorial(n):
 def check_end_game(tiles):
     r = 0
     # X
-    if tiles[0] == PLAYER_1 and tiles[1] == PLAYER_1 and tiles[2] == PLAYER_1:
+    if tiles[0] == PLAYER and tiles[1] == PLAYER and tiles[2] == PLAYER:
         r = -1
-    elif tiles[3] == PLAYER_1 and tiles[4] == PLAYER_1 and tiles[5] == PLAYER_1:
+    elif tiles[3] == PLAYER and tiles[4] == PLAYER and tiles[5] == PLAYER:
         r = -1
-    elif tiles[6] == PLAYER_1 and tiles[7] == PLAYER_1 and tiles[8] == PLAYER_1:
+    elif tiles[6] == PLAYER and tiles[7] == PLAYER and tiles[8] == PLAYER:
         r = -1
-    elif tiles[0] == PLAYER_1 and tiles[3] == PLAYER_1 and tiles[6] == PLAYER_1:
+    elif tiles[0] == PLAYER and tiles[3] == PLAYER and tiles[6] == PLAYER:
         r = -1
-    elif tiles[1] == PLAYER_1 and tiles[4] == PLAYER_1 and tiles[7] == PLAYER_1:
+    elif tiles[1] == PLAYER and tiles[4] == PLAYER and tiles[7] == PLAYER:
         r = -1
-    elif tiles[2] == PLAYER_1 and tiles[5] == PLAYER_1 and tiles[8] == PLAYER_1:
+    elif tiles[2] == PLAYER and tiles[5] == PLAYER and tiles[8] == PLAYER:
         r = -1
 
-    elif tiles[0] == PLAYER_1 and tiles[4] == PLAYER_1 and tiles[8] == PLAYER_1:
+    elif tiles[0] == PLAYER and tiles[4] == PLAYER and tiles[8] == PLAYER:
         r = -1
-    elif tiles[2] == PLAYER_1 and tiles[4] == PLAYER_1 and tiles[6] == PLAYER_1:
+    elif tiles[2] == PLAYER and tiles[4] == PLAYER and tiles[6] == PLAYER:
         r = -1
     # O
-    elif tiles[0] == PLAYER_2 and tiles[1] == PLAYER_2 and tiles[2] == PLAYER_2:
+    elif tiles[0] == CPU_PLAYER and tiles[1] == CPU_PLAYER and tiles[2] == CPU_PLAYER:
         r = 1
-    elif tiles[3] == PLAYER_2 and tiles[4] == PLAYER_2 and tiles[5] == PLAYER_2:
+    elif tiles[3] == CPU_PLAYER and tiles[4] == CPU_PLAYER and tiles[5] == CPU_PLAYER:
         r = 1
-    elif tiles[6] == PLAYER_2 and tiles[7] == PLAYER_2 and tiles[8] == PLAYER_2:
-        r = 1
-
-    elif tiles[0] == PLAYER_2 and tiles[3] == PLAYER_2 and tiles[6] == PLAYER_2:
-        r = 1
-    elif tiles[1] == PLAYER_2 and tiles[4] == PLAYER_2 and tiles[7] == PLAYER_2:
-        r = 1
-    elif tiles[2] == PLAYER_2 and tiles[5] == PLAYER_2 and tiles[8] == PLAYER_2:
+    elif tiles[6] == CPU_PLAYER and tiles[7] == CPU_PLAYER and tiles[8] == CPU_PLAYER:
         r = 1
 
-    elif tiles[0] == PLAYER_2 and tiles[4] == PLAYER_2 and tiles[8] == PLAYER_2:
+    elif tiles[0] == CPU_PLAYER and tiles[3] == CPU_PLAYER and tiles[6] == CPU_PLAYER:
         r = 1
-    elif tiles[2] == PLAYER_2 and tiles[4] == PLAYER_2 and tiles[6] == PLAYER_2:
+    elif tiles[1] == CPU_PLAYER and tiles[4] == CPU_PLAYER and tiles[7] == CPU_PLAYER:
+        r = 1
+    elif tiles[2] == CPU_PLAYER and tiles[5] == CPU_PLAYER and tiles[8] == CPU_PLAYER:
+        r = 1
+
+    elif tiles[0] == CPU_PLAYER and tiles[4] == CPU_PLAYER and tiles[8] == CPU_PLAYER:
+        r = 1
+    elif tiles[2] == CPU_PLAYER and tiles[4] == CPU_PLAYER and tiles[6] == CPU_PLAYER:
         r = 1
 
     return r
@@ -75,11 +75,11 @@ class Tree(object):
     # simulate all plays
     def simulate(self, init_tiles):
         self.root = Node(init_tiles, 0)
-        self.__aux_simulate(self.root, PLAYER_2, 1)
+        self.__aux_simulate(self.root, CPU_PLAYER, 1)
 
     # auxiliary method to simulate the plays
     def __aux_simulate(self, node, player, depth):
-        empty_tiles = list(ifilter(lambda x: x != PLAYER_1 and x != PLAYER_2, node.tiles))
+        empty_tiles = list(ifilter(lambda x: x != PLAYER and x != CPU_PLAYER, node.tiles))
 
         if len(empty_tiles) <= 0:  # if all tiles are occupied
             return
@@ -94,10 +94,10 @@ class Tree(object):
                 node_new_tiles = Node(new_tiles, depth)
                 node.next.append(node_new_tiles)
 
-            if player == PLAYER_2:
-                player = PLAYER_1
+            if player == CPU_PLAYER:
+                player = PLAYER
             else:
-                player = PLAYER_2
+                player = CPU_PLAYER
 
             for i in xrange(len(empty_tiles)):
                 self.__aux_simulate(node.next[i], player, depth + 1)
