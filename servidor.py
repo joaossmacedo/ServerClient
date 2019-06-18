@@ -23,11 +23,15 @@ while True:
         while True:
             data = connection.recv(255)
             if data:
-                print('--> received "%s"' % data)
+                col = int(data.split(',')[0][-1])
+                row = int(data.split(',')[1][0])
+                pos = row * 3 + col
+                print('--> col = "%s"' % col)
+                print('--> row = "%s"' % row)
+
                 return_data = data[::-1]
-                print(data[::1])
                 print('<-- sending data back to the client')
-                connection.sendall(return_data)
+                connection.sendall(str(pos))
             else:
                 print('\n\n')
                 print('no more data from', client_address)
