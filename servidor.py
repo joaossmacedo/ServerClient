@@ -1,4 +1,5 @@
 import socket
+from TicTacToe import *
 import sys
 
 # Create a TCP/IP socket
@@ -11,8 +12,11 @@ sock.bind(server_address)
 # Listen for incoming connections
 sock.listen(1)
 
+
 while True:
     # Wait for a connection
+    number_of_moves = 0
+    tiles = range(9)
     print('waiting for a connection')
     connection, client_address = sock.accept()
     try:
@@ -23,15 +27,27 @@ while True:
         while True:
             data = connection.recv(255)
             if data:
+                print_board(tiles)
                 col = int(data.split(',')[0][-1])
                 row = int(data.split(',')[1][0])
-                pos = row * 3 + col
-                print('--> col = "%s"' % col)
-                print('--> row = "%s"' % row)
 
-                return_data = data[::-1]
-                print('<-- sending data back to the client')
-                connection.sendall(str(pos))
+                if tiles[row * 3 + col] == PLAYER or tiles[row * 3 + col] == CPU_PLAYER\
+                        or row < 0 or row > 3 or col < 0 or col > 3:
+                    print('<-- sending message back to the client')
+                    connection.sendall("move not available")
+                else:
+                    tiles = manual_move(tiles, col, row)
+                    number_of_moves += 1
+                    if check_end_game(tiles, number_of_moves) == "":
+                        tiles = ai_move(tiles)
+                        number_of_moves += 1
+                        if check_end_game(tiles, number_of_moves) == "":
+                            print('<-- sending board back to the client')
+                            connection.sendall(format_board(tiles))
+                        else:
+                            connection.sendall(format_board(tiles) + "\nEnd Game\n" + check_end_game(tiles, number_of_moves))
+                    else:
+                        connection.sendall(format_board(tiles) + "\nEnd Game\n" + check_end_game(tiles, number_of_moves))
             else:
                 print('\n\n')
                 print('no more data from', client_address)

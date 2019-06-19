@@ -30,6 +30,17 @@ def print_board(tiles):
             print ''
     print
 
+def format_board(tiles):
+    r_tiles = ""
+    for i in range(9):
+        if tiles[i] == PLAYER or tiles[i] == CPU_PLAYER:
+            r_tiles += ' ' + tiles[i] + ' '
+        else:
+            r_tiles += ' - '
+        if (i + 1) % 3 == 0:
+            r_tiles += '\n'
+    return r_tiles
+
 
 # movement by the player
 def manual_move(original_tiles, col, row):
@@ -43,9 +54,6 @@ def manual_move(original_tiles, col, row):
 # movement by the CPU
 def ai_move(original_tiles):
     tiles = original_tiles[:]
-
-    print 'thinking ...', ;
-    sys.stdout.write(u'')
 
     possibilities = Tree()
 
@@ -68,30 +76,6 @@ def ai_move(original_tiles):
     tiles = possibilities.root.next[best_chance_index].tiles
 
     return tiles
-
-
-# the game
-def play():
-    number_of_moves = 0
-    tiles = range(9)
-
-    while check_end_game(tiles, number_of_moves) == "":
-        print_board(tiles)
-
-        if number_of_moves % 2 == 0:
-            col = -1
-            row = -1
-            while not is_move_possible(tiles, col, row):
-                row = int(raw_input('Select a row: '))
-                col = int(raw_input('Select a column: '))
-            tiles = manual_move(tiles, col, row)
-        else:
-            tiles = ai_move(tiles)
-
-        number_of_moves += 1
-    print_board(tiles)
-
-    print check_end_game(tiles, number_of_moves)
 
 
 # defines if a game is over or not
@@ -129,5 +113,3 @@ def check_end_game(tiles, number_of_moves):
 def empty_tiles(tiles):
     return list(ifilter(lambda x:x != CPU_PLAYER and x != PLAYER, tiles))
 
-
-play()

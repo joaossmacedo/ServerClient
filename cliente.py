@@ -20,9 +20,9 @@ while True:
         sock.sendall(message)
 
         data = sock.recv(255)
-        if "endgame" in data:
+        if "End Game" in data:
             break
-        print('<-- received "%s"' % data)
+        print('<-- received\n\n%s' % data)
 
     except Exception:
         print('\n\n')

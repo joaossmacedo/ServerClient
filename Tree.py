@@ -4,8 +4,8 @@ from itertools import ifilter
 
 
 # when playing against the cpu, the player is always the player 1
-PLAYER = u'x'
-CPU_PLAYER = u'o'
+PLAYER = 'x'
+CPU_PLAYER = 'o'
 
 
 def factorial(n):
@@ -65,6 +65,11 @@ class Node(object):
         self.depth = depth
         self.result = 0
         self.next = []
+
+    def display(self, indent = 0):
+        print(('    ' * indent) + str(self.tiles))
+        for c in self.next:
+            c.display(indent + 1)
 
 
 class Tree(object):
