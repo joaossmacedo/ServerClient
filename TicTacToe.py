@@ -89,7 +89,7 @@ def check_end_game(tiles, number_of_moves):
             (tiles[2] == PLAYER and tiles[5] == PLAYER and tiles[8] == PLAYER) or \
             (tiles[0] == PLAYER and tiles[4] == PLAYER and tiles[8] == PLAYER) or \
             (tiles[2] == PLAYER and tiles[4] == PLAYER and tiles[6] == PLAYER):
-        return "\nParabéns! Voce ganhou\n"
+        return "\nParabens! Voce ganhou\n"
 
     # O
     if (tiles[0] == CPU_PLAYER and tiles[1] == CPU_PLAYER and tiles[2] == CPU_PLAYER) or \

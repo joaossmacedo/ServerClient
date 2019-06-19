@@ -35,12 +35,12 @@ while True:
                     col = int(data.split(',')[0][-1])
                     row = int(data.split(',')[1][0])
 
-                    if tiles[row * 3 + col] == PLAYER or tiles[row * 3 + col] == CPU_PLAYER\
-                            or row < 0 or row > 3 or col < 0 or col > 3:
+                    if tiles[row * 3 + col] == PLAYER or tiles[row * 3 + col] == CPU_PLAYER:
                         print '<-- movimento não é possivel'
-                        connection.sendall("movimento não é possivel")
+                        connection.sendall("TYPE: ERROR///Movimento nao e possivel")
                     else:
                         tiles = manual_move(tiles, col, row)
+                        tiles_copy = tiles[:]
                         print_board(tiles)
                         print '\n<-- movimento do jogador realizado\n'
 
@@ -51,19 +51,19 @@ while True:
                             if check_end_game(tiles, number_of_moves) == "":
                                 print_board(tiles)
                                 print '\n<-- movimento do computador realizado\n'
-                                connection.sendall(format_board(tiles))
+                                connection.sendall("TYPE: GAME///" + format_board(tiles_copy) + "///" + format_board(tiles))
                             else:
                                 print '\n<-- fim de jogo'
-                                connection.sendall(format_board(tiles) + "End Game" + check_end_game(tiles, number_of_moves))
+                                connection.sendall("TYPE: ENDGAME///" + format_board(tiles) + "///" + check_end_game(tiles, number_of_moves))
                         else:
                             print '\n<-- fim de jogo'
-                            connection.sendall(format_board(tiles) + "End Game" + check_end_game(tiles, number_of_moves))
+                            connection.sendall("TYPE: ENDGAME///" + format_board(tiles) + "///" + check_end_game(tiles, number_of_moves))
                 else:
                     print "erro nos dados passados"
                     if error_regex.match(data):
-                        connection.sendall("Os valores passados não estão entre 0 e 2")
+                        connection.sendall("TYPE: ERROR///Os valores passados nao estao entre 0 e 2")
                     else:
-                        connection.sendall("Os valores passados não está no formato correto")
+                        connection.sendall("TYPE: ERROR///Os valores passados nao estao no formato correto")
             else:
                 print('\n\n')
                 print('fim dos dados', client_address)
