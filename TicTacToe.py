@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import absolute_import
 from Tree import Tree
 import sys
@@ -18,7 +19,6 @@ def is_move_possible(tiles, col, row):
 
 # prints the board
 def print_board(tiles):
-    print u'\n'
     for i in range(9):
         if tiles[i] == PLAYER or tiles[i] == CPU_PLAYER:
             print ' ' + tiles[i] + u' ', ;
@@ -28,7 +28,6 @@ def print_board(tiles):
             sys.stdout.write(u'')
         if (i + 1) % 3 == 0:
             print ''
-    print
 
 def format_board(tiles):
     r_tiles = ""
@@ -90,7 +89,7 @@ def check_end_game(tiles, number_of_moves):
             (tiles[2] == PLAYER and tiles[5] == PLAYER and tiles[8] == PLAYER) or \
             (tiles[0] == PLAYER and tiles[4] == PLAYER and tiles[8] == PLAYER) or \
             (tiles[2] == PLAYER and tiles[4] == PLAYER and tiles[6] == PLAYER):
-        return "\nCongrats you won\n"
+        return "\nParabéns! Voce ganhou\n"
 
     # O
     if (tiles[0] == CPU_PLAYER and tiles[1] == CPU_PLAYER and tiles[2] == CPU_PLAYER) or \
@@ -101,10 +100,10 @@ def check_end_game(tiles, number_of_moves):
             (tiles[2] == CPU_PLAYER and tiles[5] == CPU_PLAYER and tiles[8] == CPU_PLAYER) or \
             (tiles[0] == CPU_PLAYER and tiles[4] == CPU_PLAYER and tiles[8] == CPU_PLAYER) or \
             (tiles[2] == CPU_PLAYER and tiles[4] == CPU_PLAYER and tiles[6] == CPU_PLAYER):
-        return "\nYou lost\n"
+        return "\nVoce perdeu\n"
 
     if number_of_moves >= 9:
-        return "\nTIC TAC TIE\n"
+        return "\nVoce empatou\n"
 
     return ""
 
