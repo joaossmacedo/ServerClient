@@ -3,11 +3,8 @@ from Tree import Tree
 import sys
 from itertools import ifilter
 
-# when playing against the cpu, the player is always the player 1
 PLAYER = 'x'
 CPU_PLAYER = 'o'
-
-winner = 'N'
 
 
 def is_move_possible(tiles, col, row):
@@ -78,7 +75,7 @@ def play():
     number_of_moves = 0
     tiles = range(9)
 
-    while not check_end_game(tiles, number_of_moves):
+    while check_end_game(tiles, number_of_moves) == "":
         print_board(tiles)
 
         if number_of_moves % 2 == 0:
@@ -94,17 +91,11 @@ def play():
         number_of_moves += 1
     print_board(tiles)
 
-    if winner == PLAYER:
-        print "\nCongrats you won\n"
-    elif winner == CPU_PLAYER:
-        print "\nYou lost\n"
-    else:
-        print "\nTIC TAC TIE\n"
+    print check_end_game(tiles, number_of_moves)
 
 
 # defines if a game is over or not
 def check_end_game(tiles, number_of_moves):
-    global winner
 
     # X
     if (tiles[0] == PLAYER and tiles[1] == PLAYER and tiles[2] == PLAYER) or \
@@ -115,8 +106,7 @@ def check_end_game(tiles, number_of_moves):
             (tiles[2] == PLAYER and tiles[5] == PLAYER and tiles[8] == PLAYER) or \
             (tiles[0] == PLAYER and tiles[4] == PLAYER and tiles[8] == PLAYER) or \
             (tiles[2] == PLAYER and tiles[4] == PLAYER and tiles[6] == PLAYER):
-        winner = PLAYER
-        return True
+        return "\nCongrats you won\n"
 
     # O
     if (tiles[0] == CPU_PLAYER and tiles[1] == CPU_PLAYER and tiles[2] == CPU_PLAYER) or \
@@ -127,11 +117,12 @@ def check_end_game(tiles, number_of_moves):
             (tiles[2] == CPU_PLAYER and tiles[5] == CPU_PLAYER and tiles[8] == CPU_PLAYER) or \
             (tiles[0] == CPU_PLAYER and tiles[4] == CPU_PLAYER and tiles[8] == CPU_PLAYER) or \
             (tiles[2] == CPU_PLAYER and tiles[4] == CPU_PLAYER and tiles[6] == CPU_PLAYER):
-        winner = CPU_PLAYER
-        return True
+        return "\nYou lost\n"
 
     if number_of_moves >= 9:
-        return True
+        return "\nTIC TAC TIE\n"
+
+    return ""
 
 
 # return the empty tiles
