@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
 import socket
-import threading
 import time
 import sys
 
-def simulate_time():
+def simulate_loading():
     time.sleep(0.5)
     print('.', end='')
     sys.stdout.flush()
@@ -37,7 +36,10 @@ print (('-' * 10) + '\nINSTRUÇÕES\n' \
 while True:
     try:
         # pede os dados para o usuario
-        message = raw_input('Input: ')
+        message = ''
+        while message == '':
+            message = raw_input('Input: ')
+        # fecha o socket quando o input é endgame
         if message == "endgame":
             break
 
@@ -45,21 +47,31 @@ while True:
         print('--> enviando "%s"' % message)
         sock.sendall(message)
 
+        # recebe a resposta do servidor
         data = sock.recv(255)
+        # divide a resposta do servidor de acordo com os divisores definidos como ///
         splitted_data = data.split('///')
         data_type = splitted_data[0]
 
+        # trata dos 3 tipos de retorno possivel
         if data_type == "TYPE: ENDGAME":
             print('<-- recebendo\n')
+            # nesse tipo de retorno o segundo item da lista contem o campo
             print(splitted_data[1])
+            # o terceiro item da lista contem o resultado
             print(splitted_data[2])
             break
         elif data_type == "TYPE: ERROR":
+            # nesse tipo de retorno o segundo item da lista contem o erro
             print('<-- recebendo\n' + splitted_data[1] + '\n')
         elif data_type == "TYPE: GAME":
+            # nesse tipo de retorno o segundo item da lista contem o campo somente com a
+            # jogada do usuario
             print('<-- recebendo\n\n' + splitted_data[1])
-            simulate_time()
+            # simula um loading(...)
+            simulate_loading()
             print('')
+            # o terceiro item da lista contem o campo após a jogada do usuario e do computador
             print(splitted_data[2])
 
     except Exception:

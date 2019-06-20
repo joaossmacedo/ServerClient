@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
 from Tree import Tree
-import sys
 from itertools import ifilter
 
 PLAYER = 'x'
@@ -16,18 +15,6 @@ def is_move_possible(tiles, col, row):
 
     return True
 
-
-# prints the board
-def print_board(tiles):
-    for i in range(9):
-        if tiles[i] == PLAYER or tiles[i] == CPU_PLAYER:
-            print ' ' + tiles[i] + u' ', ;
-            sys.stdout.write(u'')
-        else:
-            print ' - ', ;
-            sys.stdout.write(u'')
-        if (i + 1) % 3 == 0:
-            print ''
 
 def format_board(tiles):
     r_tiles = ""
