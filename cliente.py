@@ -20,7 +20,7 @@ def simulate_loading():
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # conecta o socket a porta que esta escutando
-server_address = ('localhost', 10000)
+server_address = ('', 10000)
 print('conectado a %s porta %s\n' % server_address)
 sock.connect(server_address)
 

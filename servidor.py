@@ -6,7 +6,7 @@ import re
 # cria o socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-server_address = ('localhost', 10000)
+server_address = ('', 10000)
 print('conectado a %s:%s' % server_address)
 sock.bind(server_address)
 
