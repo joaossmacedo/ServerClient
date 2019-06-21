@@ -3,35 +3,41 @@ from __future__ import print_function
 import socket
 import time
 import sys
+import re
+
 
 def simulate_loading():
     time.sleep(0.5)
-    print('.', end='')
+    print('.', end = '')
     sys.stdout.flush()
     time.sleep(0.5)
-    print('.', end='')
+    print('.', end = '')
     sys.stdout.flush()
     time.sleep(0.5)
     print('.')
     sys.stdout.flush()
     time.sleep(0.5)
 
+
 # cria o socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+regex = re.compile("/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/g")
+ip = raw_input("Digite o IP do host(deixe vazio para localhost): ")
+while not re.match(r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$", ip) and ip != "":
+    ip = raw_input("Digite o IP do host(deixe vazio para localhost): ")
 
 # conecta o socket a porta que esta escutando
-server_address = ('', 10000)
+server_address = (ip, 10000)
 print('conectado a %s porta %s\n' % server_address)
 sock.connect(server_address)
 
-print (('-' * 10) + '\nINSTRUÇÕES\n' \
-      'Esse é um jogo da velha\n' \
-      'O movimento escolhido deve ser passado como "(c,r)"\n' \
-      'onde c é a coluna e r é a linha\n' \
-      'Para finalizar o jogo digitar endgame\n\n' \
-      'Para mais informações: https://en.wikipedia.org/wiki/Tic-tac-toe\n' \
-      + ('-' * 10) + '\n')
-
+print(('-' * 10) + '\nINSTRUÇÕES\n' \
+                   'Esse é um jogo da velha\n' \
+                   'O movimento escolhido deve ser passado como "(c,r)"\n' \
+                   'onde c é a coluna e r é a linha\n' \
+                   'Para finalizar o jogo digitar endgame\n\n' \
+                   'Para mais informações: https://en.wikipedia.org/wiki/Tic-tac-toe'
+                   '\n' + ('-' * 10) + '\n')
 
 while True:
     try:
@@ -80,4 +86,3 @@ while True:
 
 print('\nfechando socket')
 sock.close()
-

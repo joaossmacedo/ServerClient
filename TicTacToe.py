@@ -12,7 +12,6 @@ def is_move_possible(tiles, col, row):
         return False
     if tiles[row * 3 + col] == CPU_PLAYER or tiles[row * 3 + col] == PLAYER:
         return False
-
     return True
 
 
@@ -66,7 +65,6 @@ def ai_move(original_tiles):
 
 # defines if a game is over or not
 def check_end_game(tiles, number_of_moves):
-
     # X
     if (tiles[0] == PLAYER and tiles[1] == PLAYER and tiles[2] == PLAYER) or \
             (tiles[3] == PLAYER and tiles[4] == PLAYER and tiles[5] == PLAYER) or \

@@ -54,7 +54,7 @@ while True:
                         # computador para o cliente
                         tiles_copy = tiles[:]
                         print(format_board(tiles))
-                        print('\n<-- movimento do usuario realizado\n')
+                        print('<-- movimento do usuario realizado\n')
 
                         number_of_moves += 1
 
@@ -67,24 +67,29 @@ while True:
                             # checa se é fim de jogo
                             if check_end_game(tiles, number_of_moves) == "":
                                 print(format_board(tiles))
-                                # retorna para o cliente o campo após a jogada do usuario e o campo após a jogada do computador
-                                print('\n<-- movimento do computador realizado\n')
-                                connection.sendall("TYPE: GAME///" + format_board(tiles_copy) + "///" + format_board(tiles))
+                                # retorna para o cliente o campo após a jogada do usuario
+                                # e o campo após a jogada do computador
+                                print('<-- movimento do computador realizado\n')
+                                connection.sendall("TYPE: GAME///" + format_board(tiles_copy)
+                                                   + "///" + format_board(tiles))
                             else:
                                 # retorna para o cliente o campo final e a mensagem de fim de jogo
                                 print('\n<-- fim de jogo')
-                                connection.sendall("TYPE: ENDGAME///" + format_board(tiles) + "///" + check_end_game(tiles, number_of_moves))
+                                connection.sendall("TYPE: ENDGAME///" + format_board(tiles) +
+                                                   "///" + check_end_game(tiles, number_of_moves))
                         else:
                             # retorna para o cliente o campo final e a mensagem de fim de jogo
                             print('\n<-- fim de jogo')
-                            connection.sendall("TYPE: ENDGAME///" + format_board(tiles) + "///" + check_end_game(tiles, number_of_moves))
+                            connection.sendall("TYPE: ENDGAME///" + format_board(tiles)
+                                               + "///" + check_end_game(tiles, number_of_moves))
                 else:
                     # retorna o erro para o cliente
                     print("erro nos dados passados")
                     if type_error_regex.match(data):
                         connection.sendall("TYPE: ERROR///Os valores passados nao estao entre 0 e 2")
                     else:
-                        connection.sendall("TYPE: ERROR///Os valores passados nao estao no formato correto")
+                        connection.sendall("TYPE: ERROR///Os valores passados nao estao no "
+                                           + "formato correto")
             else:
                 # fecha a conexão com o cliente
                 print('\n\n')

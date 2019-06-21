@@ -18,42 +18,25 @@ def factorial(n):
 # check end game situation and returns 1 for win and -1 for looses
 def check_end_game(tiles):
     r = 0
-    # X
-    if tiles[0] == PLAYER and tiles[1] == PLAYER and tiles[2] == PLAYER:
-        r = -1
-    elif tiles[3] == PLAYER and tiles[4] == PLAYER and tiles[5] == PLAYER:
-        r = -1
-    elif tiles[6] == PLAYER and tiles[7] == PLAYER and tiles[8] == PLAYER:
-        r = -1
-    elif tiles[0] == PLAYER and tiles[3] == PLAYER and tiles[6] == PLAYER:
-        r = -1
-    elif tiles[1] == PLAYER and tiles[4] == PLAYER and tiles[7] == PLAYER:
-        r = -1
-    elif tiles[2] == PLAYER and tiles[5] == PLAYER and tiles[8] == PLAYER:
+    if (tiles[0] == PLAYER and tiles[1] == PLAYER and tiles[2] == PLAYER) or \
+            (tiles[3] == PLAYER and tiles[4] == PLAYER and tiles[5] == PLAYER) or \
+            (tiles[6] == PLAYER and tiles[7] == PLAYER and tiles[8] == PLAYER) or \
+            (tiles[0] == PLAYER and tiles[3] == PLAYER and tiles[6] == PLAYER) or \
+            (tiles[1] == PLAYER and tiles[4] == PLAYER and tiles[7] == PLAYER) or \
+            (tiles[2] == PLAYER and tiles[5] == PLAYER and tiles[8] == PLAYER) or \
+            (tiles[0] == PLAYER and tiles[4] == PLAYER and tiles[8] == PLAYER) or \
+            (tiles[2] == PLAYER and tiles[4] == PLAYER and tiles[6] == PLAYER):
         r = -1
 
-    elif tiles[0] == PLAYER and tiles[4] == PLAYER and tiles[8] == PLAYER:
-        r = -1
-    elif tiles[2] == PLAYER and tiles[4] == PLAYER and tiles[6] == PLAYER:
-        r = -1
     # O
-    elif tiles[0] == CPU_PLAYER and tiles[1] == CPU_PLAYER and tiles[2] == CPU_PLAYER:
-        r = 1
-    elif tiles[3] == CPU_PLAYER and tiles[4] == CPU_PLAYER and tiles[5] == CPU_PLAYER:
-        r = 1
-    elif tiles[6] == CPU_PLAYER and tiles[7] == CPU_PLAYER and tiles[8] == CPU_PLAYER:
-        r = 1
-
-    elif tiles[0] == CPU_PLAYER and tiles[3] == CPU_PLAYER and tiles[6] == CPU_PLAYER:
-        r = 1
-    elif tiles[1] == CPU_PLAYER and tiles[4] == CPU_PLAYER and tiles[7] == CPU_PLAYER:
-        r = 1
-    elif tiles[2] == CPU_PLAYER and tiles[5] == CPU_PLAYER and tiles[8] == CPU_PLAYER:
-        r = 1
-
-    elif tiles[0] == CPU_PLAYER and tiles[4] == CPU_PLAYER and tiles[8] == CPU_PLAYER:
-        r = 1
-    elif tiles[2] == CPU_PLAYER and tiles[4] == CPU_PLAYER and tiles[6] == CPU_PLAYER:
+    if (tiles[0] == CPU_PLAYER and tiles[1] == CPU_PLAYER and tiles[2] == CPU_PLAYER) or \
+            (tiles[3] == CPU_PLAYER and tiles[4] == CPU_PLAYER and tiles[5] == CPU_PLAYER) or \
+            (tiles[6] == CPU_PLAYER and tiles[7] == CPU_PLAYER and tiles[8] == CPU_PLAYER) or \
+            (tiles[0] == CPU_PLAYER and tiles[3] == CPU_PLAYER and tiles[6] == CPU_PLAYER) or \
+            (tiles[1] == CPU_PLAYER and tiles[4] == CPU_PLAYER and tiles[7] == CPU_PLAYER) or \
+            (tiles[2] == CPU_PLAYER and tiles[5] == CPU_PLAYER and tiles[8] == CPU_PLAYER) or \
+            (tiles[0] == CPU_PLAYER and tiles[4] == CPU_PLAYER and tiles[8] == CPU_PLAYER) or \
+            (tiles[2] == CPU_PLAYER and tiles[4] == CPU_PLAYER and tiles[6] == CPU_PLAYER):
         r = 1
 
     return r
